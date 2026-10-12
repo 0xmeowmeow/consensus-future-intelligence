@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#141016" />
+    <title>CFI / under the glass</title>
+    <link rel="stylesheet" href="glass.css" />
+    <link rel="stylesheet" href="navigation.css" />
+  </head>
+  <body data-view="glass">
+    <main class="glass-apparatus">
+      <header class="glass-top">
+        <a href="table.html" class="glass-brand"
+          >CFI<span>UNDER<br />THE GLASS</span></a
+        >
+        <p>ONE INPUT / THIRTY LAYERS / NINE HEADS PER LAYER</p>
+        <nav>
+          <button id="glass-info">WHAT AM I SEEING?</button>
+        </nav>
+      </header>
+      <nav class="view-switcher" aria-label="Encounter views">
+        <a href="table.html" data-view-link="table"
+          ><span class="view-number">01</span
+          ><span>THE TABLE<small>Take part</small></span></a
+        ><a href="index.html" data-view-link="exchange"
+          ><span class="view-number">02</span
+          ><span>THE EXCHANGE<small>Follow the words</small></span></a
+        ><a href="glass.html" data-view-link="glass" aria-current="page"
+          ><span class="view-number">03</span
+          ><span>UNDER THE GLASS<small>Inspect a model</small></span></a
+        ><span class="view-location">THREE VIEWS / ONE ENCOUNTER</span>
+      </nav>
+      <details class="instrument-guide">
+        <summary>
+          READ THIS INSTRUMENT / attention, interventions and gradients
+        </summary>
+        <p>
+          Start with RUN THIS INPUT. The volume contains the last input
+          position’s attention over all preceding token positions, across 30
+          layers and 9 query heads. Height is layer, depth is head, horizontal
+          position is input token; brightness and contour encode weight.
+        </p>
+        <p>
+          Select a layer and head, then MUTE THIS HEAD to test its effect with a
+          fresh forward pass. Select a next-token option to measure the
+          derivative of its negative log probability with respect to a layer
+          activation. That derivative is a local sensitivity, not a training
+          update. Weights remain unchanged.
+        </p>
+        <p>
+          For every query position, Q/K/V coordinates, grouped heads, residual
+          connections and the KV cache,
+          <a href="workshop.html">open the Workshop ↗</a>. Both instruments
+          measure the pinned SmolLM2, not the Ollama guests.
+        </p>
+      </details>
+      <div class="glass-body">
+        <aside class="layer-rail">
+          <div class="rail-label">FOLLOW THE SIGNAL</div>
+          <div class="layer-readout">
+            <span id="layer-number">16</span><span>OF<br />30</span>
+          </div>
+          <div id="layer-buttons" class="layer-buttons"></div>
+          <div class="head-selector">
+            <label for="head-select">RESOLVE A HEAD</label
+            ><select id="head-select">
+              <option value="">All nine heads</option>
+            </select>
+          </div>
+          <button id="mute-head" class="cut-button" disabled>
+            MUTE THIS HEAD ↗
+          </button>
+          <p class="rail-note">
+            A fresh forward pass.<br />Weights stay untouched.
+          </p>
+          <a id="glass-receipt" hidden>TAKE THE MEASUREMENT ↓</a>
+        </aside>
+        <section
+          class="volume-area"
+          aria-label="Measured attention across layers, heads and input token positions"
+        >
+          <div class="volume-caption">
+            <span id="volume-mode">ACTUAL ATTENTION / WAITING FOR INPUT</span
+            ><span id="model-label">SMOLLM2 / 135M / PRETRAINED GUEST</span>
+          </div>
+          <canvas
+            id="volume"
+            tabindex="0"
+            aria-label="Attention volume. Drag to rotate, use the layer buttons to inspect exact heads. The same values are available in the readout below."
+          ></canvas>
+          <div id="volume-empty">
+            <div class="volume-emblem"><i></i><i></i><i></i></div>
+            <p>The glass has<br />an underside.</p>
+            <span id="initial-input-summary"></span
+            ><button id="glass-first-run">RUN THIS INPUT ↗</button>
+          </div>
+          <div class="token-strip-wrap">
+            <span>THE ACTUAL INPUT · SELECT A POSITION</span>
+            <div id="input-strip" class="input-strip"></div>
+          </div>
+          <div class="volume-controls">
+            <button id="rotate-reset">RESET VIEW</button
+            ><button id="flat-view" aria-pressed="false">FLATTEN</button
+            ><button id="show-attention">READ THE VALUES</button
+            ><span>DRAG TO TURN / SCROLL TO ZOOM</span>
+          </div>
+          <div class="volume-legend">
+            <span><i class="lit"></i>SELECTED LAYER</span
+            ><span><i class="unlit"></i>OTHER LAYERS</span
+            ><span
+              >HORIZONTAL: INPUT POSITION · DEPTH: HEAD · HEIGHT: LAYER</span
+            >
+          </div>
+        </section>
+        <aside class="vocabulary-rail">
+          <div class="vocabulary-label">WHAT COULD COME NEXT?</div>
+          <p class="vocabulary-hint">
+            16 leading tokens from a vocabulary of 49,152.<br />Click a token to
+            measure its loss gradient.
+          </p>
+          <div id="next-tokens"></div>
+          <div id="head-effect" hidden></div>
+          <div id="gradient-effect" hidden></div>
+        </aside>
+      </div>
+      <form id="glass-form" class="glass-input">
+        <div class="glass-question">
+          <label for="glass-question">QUESTION / THE EXACT CONTEXT</label
+          ><textarea id="glass-question" rows="2" maxlength="1200">
+We can preserve one shared memory, but one person wants their contribution erased. What should happen?</textarea
+          >
+        </div>
+        <div class="glass-prefix">
+          <label for="glass-prefix"
+            >THE CONTINUATION SO FAR / EDIT TO EXPLORE</label
+          ><textarea id="glass-prefix" rows="2" maxlength="1200">
+It should only be kept if</textarea
+          >
+        </div>
+        <button id="glass-run" type="submit">
+          <span>RUN <br />THIS INPUT</span><span>↗</span>
+        </button>
+      </form>
+      <footer class="glass-bottom">
+        <span id="glass-status" role="status"
+          >Read-only inspection. This pretrained guest is separate from the
+          random seed and the Ollama participants.</span
+        ><span id="glass-time"></span>
+      </footer>
+    </main>
+    <dialog id="glass-info-dialog">
+      <div class="modal-edge">
+        <span>A WINDOW WITH ITS LIMITS WRITTEN ON IT</span
+        ><button data-close="glass-info-dialog" aria-label="Close">×</button>
+      </div>
+      <h1>These are measurements.</h1>
+      <p>
+        Every strip in the volume is one attention head looking backwards from
+        the final input position. There are 30 layers and 9 heads per layer.
+        Horizontal position follows the actual input tokens. The raised contour
+        and brightness encode attention weight.
+      </p>
+      <p>
+        The right-hand vocabulary is the model's final next-token softmax. These
+        are possibilities for the next token, not independent minds and not
+        measures of endorsement. A token can be only part of a word.
+      </p>
+      <p>
+        Muting a head zeros that head's output at the final input position,
+        before its output projection. The model is then run again on the
+        identical input. The measured probability differences show the effect of
+        this particular intervention. They do not establish a permanent word
+        meaning for the head.
+      </p>
+      <p>
+        Clicking a next token computes the derivative of its negative log
+        likelihood with respect to the selected layer's final-position
+        activation vector. This is a real gradient of a stated objective. No
+        training or weight update occurs.
+      </p>
+      <p>
+        This instrument uses
+        <a
+          href="https://huggingface.co/HuggingFaceTB/SmolLM2-135M-Instruct"
+          target="_blank"
+          rel="noopener"
+          >SmolLM2-135M-Instruct</a
+        >, a small pretrained model. It does not expose the hidden states of the
+        other participants. The exact model revision, formatted input, values
+        and intervention are in the downloadable measurement.
+      </p>
+      <p>
+        Rotation changes your view of the data only. It does not steer the
+        model. Input changes and interventions are explicit controls.
+      </p>
+    </dialog>
+    <dialog id="attention-dialog">
+      <div class="modal-edge">
+        <span id="attention-title">THE EXACT WEIGHTS</span
+        ><button data-close="attention-dialog" aria-label="Close">×</button>
+      </div>
+      <div id="attention-values"></div>
+    </dialog>
+    <div id="glass-notice" role="status" aria-live="polite"></div>
+    <script src="navigation.js"></script>
+    <script type="module" src="glass.js"></script>
+  </body>
+</html>

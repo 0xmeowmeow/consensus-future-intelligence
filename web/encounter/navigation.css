@@ -1,0 +1,162 @@
+/* A common route between instruments, using each instrument's own ink. */
+body[data-view="table"] {
+  --view-ink: #f05234;
+  --view-paper: #e9dec2;
+  --view-ground: #100e0b;
+  --view-line: #594d36;
+}
+body[data-view="exchange"] {
+  --view-ink: #d9f57a;
+  --view-paper: #e0e4c8;
+  --view-ground: #14160f;
+  --view-line: #454a32;
+}
+body[data-view="glass"] {
+  --view-ink: #ff609a;
+  --view-paper: #e8dce5;
+  --view-ground: #141016;
+  --view-line: #49374e;
+}
+.view-switcher {
+  position: sticky;
+  top: 0;
+  z-index: 15;
+  display: flex;
+  align-items: stretch;
+  background: var(--view-ground);
+  color: var(--view-paper);
+  border-block: 1px solid var(--view-line);
+  padding: 0 28px;
+  gap: 0;
+  font:
+    12px/1.3 Sligoil,
+    monospace;
+}
+.view-switcher a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 22px;
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  min-height: 58px;
+  flex: 0 1 240px;
+}
+.view-switcher a:first-child {
+  padding-left: 8px;
+}
+.view-switcher a[aria-current="page"] {
+  color: var(--view-ink);
+  border-bottom-color: var(--view-ink);
+}
+.view-switcher a:hover {
+  background: color-mix(in srgb, var(--view-ink) 8%, transparent);
+  color: var(--view-ink);
+}
+.view-switcher a:focus-visible {
+  outline: 2px solid var(--view-ink);
+  outline-offset: -5px;
+}
+.view-switcher small {
+  display: block;
+  font-size: 10px;
+  opacity: 0.75;
+  margin-top: 4px;
+}
+.view-switcher .view-number {
+  opacity: 0.55;
+  font-size: 10px;
+}
+.view-switcher .view-location {
+  margin: auto 0 auto auto;
+  font-size: 10px;
+  opacity: 0.65;
+}
+@media (max-width: 700px) {
+  .view-switcher {
+    padding: 0 10px;
+  }
+  .view-switcher a {
+    padding: 11px 8px;
+    flex: 1;
+    gap: 0;
+    font-size: 11px;
+    min-height: 61px;
+  }
+  .view-switcher small {
+    font-size: 9px;
+  }
+  .view-switcher .view-number,
+  .view-switcher .view-location {
+    display: none;
+  }
+}
+
+body[data-view="record"],
+body[data-view="workshop"] {
+  --view-ink: #efa96c;
+  --view-paper: #e9dec2;
+  --view-ground: #131110;
+  --view-line: #594d36;
+}
+.view-switcher a {
+  flex: 1;
+  padding: 12px 14px;
+  font-size: 11px;
+}
+.view-switcher .view-number {
+  display: none;
+}
+@media (max-width: 700px) {
+  .view-switcher {
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+  .view-switcher a {
+    flex: 0 0 130px;
+    padding: 10px;
+  }
+  .view-switcher a:last-of-type {
+    flex-basis: 145px;
+  }
+}
+
+.instrument-guide {
+  margin: 0;
+  padding: 15px 28px;
+  background: var(--view-ground);
+  border-bottom: 1px solid var(--view-line);
+  font:
+    11px/1.7 Sligoil,
+    monospace;
+  color: var(--view-paper);
+}
+.instrument-guide summary {
+  cursor: pointer;
+  color: var(--view-ink);
+}
+.instrument-guide p {
+  max-width: 1000px;
+}
+.instrument-guide a {
+  color: var(--view-ink);
+}
+
+@media (max-width: 700px) {
+  .view-switcher {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow: visible;
+    padding: 0 8px;
+  }
+  .view-switcher a,
+  .view-switcher a:last-of-type {
+    min-height: 48px;
+    padding: 8px;
+    font-size: 9px;
+  }
+  .view-switcher small {
+    font-size: 8px;
+  }
+}

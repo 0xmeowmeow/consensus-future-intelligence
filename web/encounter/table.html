@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>CFI / The conversation at the table</title>
+    <link rel="stylesheet" href="table.css" />
+    <link rel="stylesheet" href="conversation.css" />
+    <link rel="stylesheet" href="navigation.css" />
+  </head>
+  <body data-view="table">
+    <header class="table-mast">
+      <a
+        href="table.html"
+        class="table-brand"
+        aria-label="Consensus Future Intelligence"
+        ><span>CONSENSUS</span><span>FUTURE</span><span>INTELLIGENCE</span></a
+      >
+      <nav>
+        <button id="sound" aria-pressed="false">SOUND OFF</button
+        ><button id="new-call">PLACE A CALL ↗</button
+        ><button id="close-call">GOODBYE ↙</button>
+      </nav>
+    </header>
+    <nav class="view-switcher" aria-label="Encounter views">
+      <a href="table.html" data-view-link="table"
+        ><span>THE TABLE<small>Talk together</small></span></a
+      ><a href="index.html" data-view-link="exchange"
+        ><span>THE EXCHANGE<small>Trace relationships</small></span></a
+      ><a href="glass.html" data-view-link="glass"
+        ><span>UNDER THE GLASS<small>Inspect attention</small></span></a
+      ><a href="record.html" data-view-link="record"
+        ><span>THE RECORD<small>Follow changes</small></span></a
+      ><a href="workshop.html" data-view-link="workshop"
+        ><span>THE WORKSHOP<small>Take it apart</small></span></a
+      >
+    </nav>
+    <main class="conversation-table">
+      <div class="conversation-engraving" aria-hidden="true"></div>
+      <header class="room-heading">
+        <div class="eyebrow">
+          SEVERAL MINDS / ONE CONVERSATION <span id="phase"></span>
+        </div>
+        <h1 id="question">Who are we calling into being?</h1>
+        <p id="next-action" role="status">
+          Place a call, invite the other hands, and begin with a question.
+        </p>
+      </header>
+      <div class="room-layout">
+        <aside class="room-margin">
+          <h2>AROUND THE TABLE</h2>
+          <div id="people"></div>
+          <p class="fine">
+            One reply or pass per guest per round. Each guest sees the earlier
+            turns. The order is shown here.
+          </p>
+          <button id="join">TAKE A PLACE +</button
+          ><button id="another-round">INVITE ANOTHER ROUND ↗</button>
+          <h2>MARK THE MOMENT</h2>
+          <p class="fine">
+            Agreement, a turn, a difference that remains. Leave a pin others can
+            question.
+          </p>
+          <button id="add-marker">PLACE A MARKER +</button>
+          <div id="markers"></div>
+          <a id="record-link" href="record.html">FOLLOW THE CHANGES ↗</a>
+          <details>
+            <summary>What the numbers mean</summary>
+            <p>
+              Helpful / unhelpful is feedback on a message’s contribution to the
+              conversation. Support / opposition is the existing shared
+              allocation: one absolute unit per identity across the encounter.
+              Neither is a truth score or an attention measurement.
+            </p>
+            <p>
+              A marker is an attributed interpretation. Agreement requires
+              explicit endorsements; silence is not counted.
+            </p>
+          </details>
+          <a id="receipt" href="#">DOWNLOAD THE WHOLE TRACE ↓</a>
+        </aside>
+        <section class="conversation-well" aria-label="Shared conversation">
+          <div
+            id="messages"
+            role="log"
+            aria-live="polite"
+            aria-relevant="additions"
+          ></div>
+          <button id="latest" hidden>NEW WORDS BELOW ↓</button>
+          <form id="composer">
+            <div class="composer-head">
+              <label for="words">YOUR WORDS AT THE TABLE</label
+              ><span id="reply-label"></span
+              ><button type="button" id="clear-reply" hidden>
+                × CLEAR REPLY
+              </button>
+            </div>
+            <textarea
+              id="words"
+              rows="3"
+              maxlength="1800"
+              required
+              placeholder="Answer someone, ask a question, or change the direction."
+            ></textarea>
+            <div class="composer-foot">
+              <select id="relation" aria-label="Relationship">
+                <option value="answer">New thought</option>
+                <option value="question">Question</option>
+                <option value="continuation">Reply</option>
+                <option value="qualification">Condition</option>
+                <option value="objection">Objection</option></select
+              ><label
+                ><input id="ask-guests" type="checkbox" checked /> Invite one
+                round of replies</label
+              ><button id="send" type="submit">SAY IT ↗</button>
+            </div>
+            <p id="composer-status" class="fine"></p>
+          </form>
+        </section>
+      </div>
+      <footer class="table-foot">
+        <span>CONTACT IS SOMETHING WE MAKE.</span
+        ><a href="credits.html">ART & SOURCES ↗</a
+        ><span>CFI / A CONVERSATION WITH CONSEQUENCES</span>
+      </footer>
+    </main>
+    <dialog id="dial-dialog">
+      <form id="dial-form">
+        <div class="paper-edge">
+          <span>REQUEST FOR CONTACT</span
+          ><button type="button" data-close="dial-dialog">× CLOSE</button>
+        </div>
+        <h1>Who are we<br />calling into being?</h1>
+        <label for="caller">YOUR NAME</label
+        ><input id="caller" maxlength="36" required /><label for="call-question"
+          >THE OPENING QUESTION</label
+        ><textarea
+          id="call-question"
+          maxlength="800"
+          rows="4"
+          required
+        ></textarea
+        ><label>THE OTHER HANDS / CHOOSE 1–8</label>
+        <div id="models"></div>
+        <p class="fine">
+          Installed local models. Model names describe the invited checkpoints;
+          they do not establish independence, honesty or resistance to flattery.
+        </p>
+        <button class="red-button" type="submit">DIAL THE OTHER SIDE ↗</button>
+      </form>
+    </dialog>
+    <dialog id="name-dialog">
+      <form id="name-form">
+        <div class="paper-edge">
+          <span>ANOTHER HAND</span
+          ><button type="button" data-close="name-dialog">× CLOSE</button>
+        </div>
+        <label for="my-name">YOUR NAME ON THE TRACE</label
+        ><input id="my-name" maxlength="36" required /><button type="submit">
+          TAKE A PLACE ↗
+        </button>
+      </form>
+    </dialog>
+    <dialog id="marker-dialog">
+      <form id="marker-form">
+        <div class="paper-edge">
+          <span>PIN THIS MOMENT</span
+          ><button type="button" data-close="marker-dialog">× CLOSE</button>
+        </div>
+        <label for="marker-kind">WHAT SEEMS TO HAVE HAPPENED?</label
+        ><select id="marker-kind">
+          <option value="direction">Change of direction</option>
+          <option value="agreement">Proposed agreement</option>
+          <option value="disagreement">Unresolved difference</option>
+          <option value="question">Open question</option></select
+        ><label for="marker-note">YOUR ACCOUNT OF IT</label
+        ><textarea
+          id="marker-note"
+          rows="4"
+          maxlength="1000"
+          required
+        ></textarea>
+        <p id="marker-anchor" class="fine"></p>
+        <p class="fine">
+          This saves a snapshot of the messages, allocations and feedback.
+          Others can agree, attach a condition or object in the Record.
+        </p>
+        <button type="submit">LEAVE THE PIN ↗</button>
+      </form>
+    </dialog>
+    <div id="notice" role="status" aria-live="polite"></div>
+    <script src="navigation.js"></script>
+    <script type="module" src="conversation.js"></script>
+  </body>
+</html>

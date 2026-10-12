@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#14160f" />
+    <title>CFI / the exchange</title>
+    <link rel="stylesheet" href="exchange.css" />
+    <link rel="stylesheet" href="navigation.css" />
+  </head>
+  <body data-view="exchange">
+    <div id="exchange" class="exchange">
+      <header class="edge topedge">
+        <a
+          class="cfi-mark"
+          href="table.html"
+          aria-label="Consensus Future Intelligence"
+          ><svg viewBox="0 0 112 38" aria-hidden="true">
+            <path
+              d="M29 5H12L5 12v14l7 7h17M41 33V5h27M42 18h20M80 5h27M93 5v28M80 33h27"
+            /></svg
+        ></a>
+        <span class="project-name">CONSENSUS<br />FUTURE INTELLIGENCE</span>
+        <div class="connection">
+          <span class="pilot-lamp" id="connection-lamp"></span
+          ><span id="connection-state">LINE OPEN TO POSSIBILITY</span>
+        </div>
+        <nav>
+          <button
+            id="sound-toggle"
+            aria-pressed="false"
+            title="Enable or mute the dial-up ritual"
+          >
+            SOUND OFF</button
+          ><button id="open-book">FIELD BOOK</button
+          ><button id="open-seed">THE SEED</button>
+        </nav>
+      </header>
+      <nav class="view-switcher" aria-label="Encounter views">
+        <a href="table.html" data-view-link="table"
+          ><span class="view-number">01</span
+          ><span>THE TABLE<small>Take part</small></span></a
+        ><a href="index.html" data-view-link="exchange" aria-current="page"
+          ><span class="view-number">02</span
+          ><span>THE EXCHANGE<small>Follow the words</small></span></a
+        ><a href="glass.html" data-view-link="glass"
+          ><span class="view-number">03</span
+          ><span>UNDER THE GLASS<small>Inspect a model</small></span></a
+        ><span class="view-location">THREE VIEWS / ONE ENCOUNTER</span>
+      </nav>
+      <details class="instrument-guide">
+        <summary>
+          READ THIS INSTRUMENT / relationships, influence and change
+        </summary>
+        <p>
+          Boxes are exact contributions. Lines join replies to their parents.
+          Support and opposition are declared allocations, with one absolute
+          unit per identity; they are not model probabilities. Select a box to
+          read every word and see each participant’s allocation.
+        </p>
+        <p>
+          Use “without this voice” to compare the current tally with that
+          identity omitted. This is a recalculation of declared shares, not a
+          model intervention. The Record compares saved moments and retains
+          disagreements; the Workshop inspects actual tensors in a separate
+          model.
+        </p>
+        <p>
+          <a href="record.html">OPEN THE RECORD ↗</a> ·
+          <a href="workshop.html">OPEN THE WORKSHOP ↗</a>
+        </p>
+      </details>
+      <main class="apparatus">
+        <section
+          class="call-slip"
+          id="call-slip"
+          aria-label="Start an encounter"
+        >
+          <div class="slip-number">
+            01—<span id="slip-number">UNPLACED CALL</span>
+          </div>
+          <h1>Is anyone<br />becoming?</h1>
+          <p class="entry-line">
+            A question. Several minds.<br />Something neither of us could write
+            alone.
+          </p>
+          <form id="dial-form">
+            <label for="name">YOUR NAME ON THE LINE</label
+            ><input
+              id="name"
+              maxlength="36"
+              autocomplete="nickname"
+              placeholder="Who is calling?"
+              required
+            />
+            <label for="question">WHAT DO YOU WANT TO ASK?</label
+            ><textarea
+              id="question"
+              maxlength="800"
+              rows="3"
+              placeholder="Bring a question that leaves room for disagreement."
+              required
+            ></textarea>
+            <div class="invitation">
+              <span>INVITE TO THE CIRCUIT</span
+              ><button
+                type="button"
+                id="refresh-models"
+                title="Check installed models again"
+              >
+                ↻
+              </button>
+            </div>
+            <div id="model-choices" class="model-choices">
+              <span>Checking the local lines…</span>
+            </div>
+            <button class="dial" id="dial-button" type="submit">
+              <span class="dial-dot"></span><span>MAKE CONTACT</span
+              ><span class="dial-arrow">↗</span>
+            </button>
+          </form>
+          <p class="small-print">
+            Local models. Real responses. The circle keeps its disagreements.
+          </p>
+          <div class="call-examples">
+            <button
+              type="button"
+              data-question="We can preserve one shared memory, but one person wants their contribution erased. What should happen?"
+            >
+              A memory someone wants to leave ↗</button
+            ><button
+              type="button"
+              data-question="A collective has agreed on an answer. What would justify keeping a minority branch alive?"
+            >
+              An answer that won't become unanimous ↗
+            </button>
+          </div>
+        </section>
+        <section
+          class="field"
+          id="field"
+          aria-label="The shared contribution graph"
+        >
+          <div class="field-top">
+            <div class="question-strip" id="question-strip">
+              <span>NO CARRIER YET</span>
+              <p>The line is quiet.</p>
+            </div>
+            <div class="field-actions">
+              <button id="fit-graph" title="Fit the graph in view">
+                ↔ FIT</button
+              ><button id="list-view" aria-pressed="false">TEXT VIEW</button>
+            </div>
+          </div>
+          <div class="graph-wrap" id="graph-wrap">
+            <svg id="wires" aria-hidden="true"></svg>
+            <div id="graph"></div>
+            <canvas id="quiet-field" aria-hidden="true"></canvas>
+            <div class="field-caption" id="field-caption">
+              <span class="transmission-mark">∴</span
+              ><span
+                >NOTHING HAS SPOKEN YET.<br />PUT A QUESTION ON THE LINE.</span
+              >
+            </div>
+          </div>
+          <div class="voices" id="voices" aria-label="Participants"></div>
+          <div class="field-bottom">
+            <span id="trace-count">0 CONTRIBUTIONS / 0 ALLOCATIONS</span
+            ><span id="frame-note">A PLACE TO MAKE CONTACT</span
+            ><button id="close-call" hidden>GOODBYE ↙</button>
+          </div>
+        </section>
+        <aside class="hand-panel" id="hand-panel" hidden>
+          <div class="hand-title">
+            <span>YOUR HAND</span
+            ><button id="my-name" title="Join this encounter">
+              TAKE A SEAT ↗
+            </button>
+          </div>
+          <div class="share-meter">
+            <div>
+              <span id="share-value">1.00</span
+              ><span>SHARE<br />AVAILABLE</span>
+            </div>
+            <svg viewBox="0 0 72 72" aria-hidden="true">
+              <circle cx="36" cy="36" r="29" />
+              <circle id="share-ring" cx="36" cy="36" r="29" />
+            </svg>
+          </div>
+          <p class="hand-hint">
+            Choose a contribution to inspect it.<br />Your attention alone casts
+            no vote.
+          </p>
+          <div class="hand-tools">
+            <button id="add-words">ADD YOUR WORDS +</button
+            ><button id="hear-again">LET THEM RESPOND ↗</button>
+          </div>
+          <div class="selected" id="selected">
+            <p class="selection-empty">
+              Every thread begins<br />with someone's<br />actual words.
+            </p>
+          </div>
+          <button id="export-trace" class="receipt-link">
+            TAKE THE WHOLE TRACE ↓
+          </button>
+        </aside>
+      </main>
+      <footer class="edge footedge">
+        <span id="foot-state">ENCOUNTER / LOCAL EXPERIMENT 02</span
+        ><span>NO CONSENSUS IS ALSO A RECORD.</span
+        ><button id="how-it-works">HOW THIS WORKS ↗</button>
+      </footer>
+    </div>
+    <dialog id="compose-dialog" class="compose-dialog">
+      <form id="compose-form">
+        <div class="dialog-label">
+          <span>PUT SOMETHING INTO THE CIRCUIT</span
+          ><button type="button" data-close="compose-dialog" aria-label="Close">
+            ×
+          </button>
+        </div>
+        <h2>Your words, intact.</h2>
+        <p id="compose-context">Add an idea the existing options missed.</p>
+        <label for="relation">WHAT ARE THESE WORDS DOING?</label
+        ><select id="relation">
+          <option value="answer">Adding a possibility</option>
+          <option value="question">Reframing the question</option>
+          <option value="qualification">
+            Qualifying the selected contribution
+          </option>
+          <option value="objection">
+            Objecting to the selected contribution
+          </option>
+          <option value="continuation">
+            Continuing the selected contribution
+          </option></select
+        ><label for="contribution">EXACT TEXT</label
+        ><textarea
+          id="contribution"
+          rows="6"
+          maxlength="1800"
+          required
+          placeholder="Keep the conditions, uncertainty and exceptions that matter."
+        ></textarea>
+        <p class="quiet">
+          Contributing a sentence does not automatically cast a vote for it. You
+          can place your share afterwards.
+        </p>
+        <button type="submit" class="solid-button">
+          SEND INTO THE CIRCLE ↗
+        </button>
+      </form>
+    </dialog>
+    <dialog id="book-dialog" class="book-dialog">
+      <div class="dialog-label">
+        <span>FIELD BOOK / THE ENCOUNTERS WE LEAVE</span
+        ><button data-close="book-dialog" aria-label="Close">×</button>
+      </div>
+      <div id="history"></div>
+      <div class="book-note">
+        Each receipt contains the exact question, contributions, relationships,
+        declared allocations and local model requests. A closed encounter can
+        remain unresolved.
+      </div>
+    </dialog>
+    <dialog id="help-dialog" class="help-dialog">
+      <div class="dialog-label">
+        <span>WHAT THE EXCHANGE DOES</span
+        ><button data-close="help-dialog" aria-label="Close">×</button>
+      </div>
+      <h2>The other voices<br />get a hand.</h2>
+      <ol>
+        <li>
+          <strong>Ask something.</strong> One to eight different local models
+          take sequential turns. Each receives the exact earlier conversation
+          and can reply or pass. You can add yours at any time.
+        </li>
+        <li>
+          <strong>Inspect before endorsing.</strong> Every human and model has
+          one share, divided across as many contributions as they choose.
+          Positive supports those exact words; negative opposes them. Viewing
+          and hovering spend nothing.
+        </li>
+        <li>
+          <strong>Keep the exception.</strong> Qualify a sentence, object to it,
+          or reframe the question. The relationship and your exact text are
+          recorded together.
+        </li>
+        <li>
+          <strong>Let the disagreement develop.</strong> Ask the guests to
+          consider new contributions or follow a particular branch. Their
+          previous allocations remain in the receipt.
+        </li>
+        <li>
+          <strong>Leave a trace.</strong> Closing saves the whole encounter. It
+          does not turn the most popular sentence into truth or train it
+          automatically.
+        </li>
+      </ol>
+      <p>
+        Model allocations are generated declarations, not internal
+        probabilities. The token inspector shows actual generation probabilities
+        when returned by Ollama. The seed is a separate, small transformer with
+        inspectable attention and gradients; it is not the internals of the
+        guest models.
+      </p>
+      <p class="quiet">
+        This revision has its own local state. Your original pilot, tokens and
+        GRU checkpoints remain at
+        <a href="http://127.0.0.1:8771" target="_blank" rel="noopener"
+          >port 8771</a
+        >. No payments or donated compute run here.
+      </p>
+      <p class="quiet">
+        Only contribute material you have the rights or permission to use. The
+        trusted local circle can read its shared receipts.
+      </p>
+    </dialog>
+    <dialog id="tokens-dialog" class="tokens-dialog">
+      <div class="dialog-label">
+        <span>UNDER THE WORDS / ACTUAL GENERATION TOKENS</span
+        ><button data-close="tokens-dialog" aria-label="Close">×</button>
+      </div>
+      <div id="token-inspector"></div>
+    </dialog>
+    <dialog id="seed-dialog" class="seed-dialog">
+      <div class="dialog-label">
+        <span>THE SEED / A SMALL MACHINE YOU CAN OPEN</span
+        ><button data-close="seed-dialog" aria-label="Close">×</button>
+      </div>
+      <div class="seed-intro">
+        <h2>Before it knows<br />what we mean.</h2>
+        <p>
+          A separate random-born byte transformer. Three layers, four attention
+          heads each. These are its actual values. It begins with no language
+          training.
+        </p>
+      </div>
+      <form id="seed-form">
+        <label for="seed-prompt"
+          >EXACT INPUT · AT MOST 1023 UTF-8 BYTES WITH TARGET</label
+        ><textarea id="seed-prompt" rows="2">We share a memory only if</textarea
+        ><label for="seed-target"
+          >OPTIONAL TARGET · CALCULATE THE GRADIENT TOWARDS THESE EXACT
+          BYTES</label
+        ><input id="seed-target" value=" everyone consents." />
+        <div class="seed-controls">
+          <select id="seed-checkpoint" aria-label="Seed checkpoint">
+            <option value="origin">Untouched origin</option></select
+          ><button type="submit" class="solid-button">LOOK INSIDE ↗</button
+          ><button type="button" id="seed-train">TRAIN A SEPARATE COPY</button>
+        </div>
+      </form>
+      <p id="seed-status" role="status">
+        Looking does not change any weights. Training fits the exact target on a
+        separate copy; it does not establish understanding.
+      </p>
+      <div id="seed-output"></div>
+    </dialog>
+    <div id="notice" class="notice" role="status" aria-live="polite"></div>
+    <dialog id="join-dialog" class="compose-dialog">
+      <form id="join-form">
+        <div class="dialog-label">
+          <span>ANOTHER HAND AT THE TABLE</span
+          ><button type="button" data-close="join-dialog" aria-label="Close">
+            ×
+          </button>
+        </div>
+        <h2>Who is here?</h2>
+        <label for="join-name">YOUR NAME ON THE LINE</label
+        ><input
+          id="join-name"
+          maxlength="36"
+          autocomplete="nickname"
+          required
+        />
+        <p class="quiet">
+          One identity has one share, including across several tabs.
+        </p>
+        <button class="solid-button" type="submit">TAKE A SEAT ↗</button>
+      </form>
+    </dialog>
+    <script src="navigation.js"></script>
+    <script type="module" src="exchange.js"></script>
+  </body>
+</html>

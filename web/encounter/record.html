@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>CFI / The record.</title>
+    <link rel="stylesheet" href="table.css" />
+    <link rel="stylesheet" href="instruments.css" />
+    <link rel="stylesheet" href="navigation.css" />
+  </head>
+  <body data-view="record">
+    <header class="instrument-mast">
+      <a href="table.html">CFI / ENCOUNTER INSTRUMENTS</a
+      ><span>WHAT CHANGED / WHO MOVED / WHAT REMAINS</span>
+    </header>
+    <nav class="view-switcher" aria-label="Encounter views">
+      <a href="table.html" data-view-link="table"
+        ><span>THE TABLE<small>Talk together</small></span></a
+      ><a href="index.html" data-view-link="exchange"
+        ><span>THE EXCHANGE<small>Trace relationships</small></span></a
+      ><a href="glass.html" data-view-link="glass"
+        ><span>UNDER THE GLASS<small>Inspect attention</small></span></a
+      ><a href="record.html" data-view-link="record"
+        ><span>THE RECORD<small>Follow changes</small></span></a
+      ><a href="workshop.html" data-view-link="workshop"
+        ><span>THE WORKSHOP<small>Take it apart</small></span></a
+      >
+    </nav>
+    <main class="instrument-main">
+      <header class="instrument-title">
+        <span class="eyebrow">WHAT CHANGED / WHO MOVED / WHAT REMAINS</span>
+        <h1>The record.</h1>
+      </header>
+      <section class="instrument-intro">
+        <p>
+          Follow the conversation through its turning points. A marker preserves
+          the state at that moment; its interpretation stays open to
+          disagreement.
+        </p>
+        <label for="encounter-choice">ENCOUNTER</label
+        ><select id="encounter-choice"></select>
+        <p id="record-question"></p>
+        <div class="control-row">
+          <button id="refresh-record">REFRESH THE RECORD ↻</button
+          ><span id="record-updated" class="fine"></span>
+        </div>
+        <a id="full-receipt">DOWNLOAD COMPLETE TRACE ↓</a>
+      </section>
+      <section class="instrument-section">
+        <div class="section-label">01 / THE PATH THROUGH THE ROOM</div>
+        <p class="fine">
+          Each row is a participant. Dots are actual messages in chronological
+          order; lines are explicit replies. Click a dot to inspect its exact
+          words. This is conversational structure, not a latent-space
+          projection.
+        </p>
+        <div id="flow" class="flow-scroll"></div>
+        <div id="turn-detail"></div>
+      </section>
+      <div class="record-layout">
+        <aside>
+          <div class="section-label">02 / PINS IN THE RECORD</div>
+          <div id="record-markers"></div>
+          <p class="fine">
+            Round checkpoints are automatic. Proposed agreement, changes of
+            direction and unresolved differences are attributed observations.
+          </p>
+        </aside>
+        <section>
+          <div id="marker-detail"></div>
+          <div class="section-label">03 / BETWEEN TWO MOMENTS</div>
+          <div class="control-row">
+            <label
+              >FROM
+              <select id="from-marker"></select></label
+            ><label
+              >TO
+              <select id="to-marker"></select></label
+            ><label
+              >VOICE
+              <select id="compare-voice"></select
+            ></label>
+          </div>
+          <p class="fine">
+            Compare exact allocation snapshots and new messages. Helpfulness and
+            support remain separate. A missing allocation means no recorded
+            allocation; it does not establish indifference.
+          </p>
+          <div id="comparison"></div>
+        </section>
+      </div>
+      <section class="instrument-section">
+        <div class="section-label">04 / THE EVENT LEDGER</div>
+        <label for="event-filter">SHOW</label
+        ><select id="event-filter">
+          <option value="all">Every recorded event</option>
+          <option value="contribution">Messages</option>
+          <option value="allocation">Support / opposition changes</option>
+          <option value="feedback">Helpfulness feedback</option>
+          <option value="marker">Markers</option>
+          <option value="endorsement">Marker endorsements</option>
+          <option value="passed">Guest passes</option>
+          <option value="connection_failed">Connection failures</option>
+        </select>
+        <div id="events"></div>
+      </section>
+      <dialog id="endorse-dialog">
+        <form id="endorse-form">
+          <div class="paper-edge">
+            <span>YOUR POSITION ON THIS MARKER</span
+            ><button type="button" id="close-endorse">× CLOSE</button>
+          </div>
+          <label for="stance">POSITION</label
+          ><select id="stance">
+            <option value="agree">Agree with this account</option>
+            <option value="condition">Agree with a condition</option>
+            <option value="oppose">Disagree with this account</option>
+            <option value="withdraw">
+              Withdraw my previous position
+            </option></select
+          ><label for="stance-note">CONDITION OR EXPLANATION</label
+          ><textarea id="stance-note" maxlength="1000" rows="4"></textarea>
+          <p class="fine">
+            Your latest position is shown; every change remains in the event
+            ledger.
+          </p>
+          <button type="submit">RECORD MY POSITION ↗</button>
+        </form>
+      </dialog>
+    </main>
+    <div id="instrument-notice" role="status" aria-live="polite"></div>
+    <script src="navigation.js"></script>
+    <script type="module" src="record.js"></script>
+  </body>
+</html>

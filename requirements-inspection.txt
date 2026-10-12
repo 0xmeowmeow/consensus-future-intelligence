@@ -1,0 +1,2 @@
+# Optional read-only inspection guest. The main encounter does not depend on it.
+transformers==5.19.0

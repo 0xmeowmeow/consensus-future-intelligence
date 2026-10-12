@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>CFI / Take it apart.</title>
+    <link rel="stylesheet" href="table.css" />
+    <link rel="stylesheet" href="instruments.css" />
+    <link rel="stylesheet" href="navigation.css" />
+  </head>
+  <body data-view="workshop">
+    <header class="instrument-mast">
+      <a href="table.html">CFI / ENCOUNTER INSTRUMENTS</a
+      ><span>WORDS → TENSORS → WORDS</span>
+    </header>
+    <nav class="view-switcher" aria-label="Encounter views">
+      <a href="table.html" data-view-link="table"
+        ><span>THE TABLE<small>Talk together</small></span></a
+      ><a href="index.html" data-view-link="exchange"
+        ><span>THE EXCHANGE<small>Trace relationships</small></span></a
+      ><a href="glass.html" data-view-link="glass"
+        ><span>UNDER THE GLASS<small>Inspect attention</small></span></a
+      ><a href="record.html" data-view-link="record"
+        ><span>THE RECORD<small>Follow changes</small></span></a
+      ><a href="workshop.html" data-view-link="workshop"
+        ><span>THE WORKSHOP<small>Take it apart</small></span></a
+      >
+    </nav>
+    <main class="instrument-main">
+      <header class="instrument-title">
+        <span class="eyebrow">WORDS → TENSORS → WORDS</span>
+        <h1>Take it apart.</h1>
+      </header>
+      <section class="instrument-intro">
+        <p>
+          The conversation supplies something to investigate. These instruments
+          measure <strong>SmolLM2-135M-Instruct</strong>, a separate, pinned
+          local model: 30 layers, 9 query heads, 3 key/value heads. They do not
+          expose the internals of the Ollama guests.
+        </p>
+        <p id="context-source" class="fine"></p>
+        <div class="control-row">
+          <button id="import-question" disabled>
+            USE ENCOUNTER QUESTION ↙</button
+          ><button id="import-turn" disabled>USE SELECTED MESSAGE ↙</button
+          ><a href="glass.html" id="glass-link">OPEN THE ATTENTION VOLUME ↗</a>
+        </div>
+      </section>
+      <nav class="bench-tabs" aria-label="Workshop instruments">
+        <button data-bench="mechanism" aria-pressed="true">
+          01 / THE TRANSFORMER</button
+        ><button data-bench="cache" aria-pressed="false">
+          02 / THE KV CACHE</button
+        ><button data-bench="tokenizer" aria-pressed="false">
+          03 / THE TOKENIZER
+        </button>
+      </nav>
+      <form id="measurement-form" class="input-bench">
+        <div>
+          <label for="question-input">QUESTION / EXACT TEXT</label
+          ><textarea id="question-input" maxlength="1200" rows="3">
+What makes a shared memory ours?</textarea
+          >
+        </div>
+        <div>
+          <label for="prefix-input">ASSISTANT PREFIX / OPTIONAL</label
+          ><textarea
+            id="prefix-input"
+            maxlength="1200"
+            rows="3"
+            placeholder="Only if"
+          ></textarea>
+        </div>
+        <div class="control-row">
+          <label
+            >LAYER
+            <select id="layer-input"></select></label
+          ><label
+            >DECODE STEPS
+            <input
+              id="steps-input"
+              type="number"
+              min="1"
+              max="8"
+              value="3" /></label
+          ><button type="submit" id="measure">MEASURE THIS MODEL ↗</button
+          ><a id="measurement-receipt" hidden>EXACT MEASUREMENT ↓</a>
+        </div>
+        <p class="fine">
+          Run once, then explore every head, query position and coordinate in
+          this layer without another model call. Changing the layer or input
+          needs a fresh measurement. Up to 192 input tokens, including the
+          visible chat template; oversized input is rejected without cropping.
+        </p>
+        <details>
+          <summary>Choose the decode tokens yourself</summary>
+          <label for="append-ids"
+            >TOKEN IDs / JSON ARRAY, 1–8 IDs; BLANK USES GREEDY ARGMAX</label
+          ><input id="append-ids" placeholder="[49, 1962]" />
+          <p class="fine">
+            The cache and replay paths both consume these exact IDs. A text
+            fragment may encode differently in context; choosing IDs avoids
+            silently retokenizing a prefix.
+          </p>
+        </details>
+      </form>
+      <p id="run-status" role="status">
+        Ready. Measure an input, or open the tokenizer bench.
+      </p>
+      <section id="mechanism-bench">
+        <div id="mechanism-empty" class="unmeasured">
+          No measurement yet. The panels below will contain actual activations
+          after a forward pass.
+        </div>
+        <div id="mechanism-results" hidden>
+          <div class="section-label">
+            01 / ONE BLOCK, WITH ITS WIRES EXPOSED
+          </div>
+          <p id="measurement-label"></p>
+          <div id="pipeline" class="pipeline"></div>
+          <div id="operation-detail" class="operation-detail"></div>
+          <div class="control-row">
+            <label
+              >QUERY HEAD
+              <select id="head-input"></select></label
+            ><label
+              >QUERY POSITION
+              <select id="query-input"></select></label
+            ><label
+              >KEY POSITION
+              <select id="key-input"></select></label
+            ><label
+              >COORDINATE
+              <input
+                id="coordinate-input"
+                type="number"
+                min="0"
+                max="63"
+                value="0"
+            /></label>
+          </div>
+          <p id="group-mapping"></p>
+          <div id="head-map" class="head-map"></div>
+          <p class="fine">
+            Multihead attention computes several different weighted combinations
+            in parallel. Here three query heads share each K/V head. All nine
+            outputs are concatenated and projected back into the 576-coordinate
+            residual stream.
+          </p>
+          <div class="matrix-layout">
+            <div>
+              <div class="section-label">
+                ATTENTION / QUERY ROWS × KEY COLUMNS
+              </div>
+              <div id="matrix" class="matrix-scroll"></div>
+              <p class="fine">
+                Brightness is the actual softmax weight. The causal mask
+                excludes future columns. Click a cell to inspect its arithmetic.
+              </p>
+            </div>
+            <div>
+              <div class="section-label">FOLLOW ONE CALCULATION</div>
+              <div id="arithmetic"></div>
+            </div>
+          </div>
+          <div class="section-label">
+            ALL 64 COORDINATES / SELECTED QUERY AND KEY
+          </div>
+          <div id="vectors"></div>
+          <details>
+            <summary>Reconstruction checks & exact input</summary>
+            <pre id="checks"></pre>
+            <pre id="exact-input"></pre>
+          </details>
+          <p class="fine">
+            Attention weights describe an operation inside this model. They are
+            not word meanings, votes, explanations of belief, or a complete
+            causal account. Use the head-ablation experiment under the Glass to
+            test how changing a head changes the output.
+          </p>
+        </div>
+      </section>
+      <section id="cache-bench" hidden>
+        <div class="instrument-intro">
+          <h2>What stays when a token arrives?</h2>
+          <p>
+            A decoder can process its prefix once, keep each layer’s keys and
+            values, and then process one new position per step. The new query
+            still attends across the accumulated keys. The cache is working
+            state for this sequence, not a weight update or a memory of other
+            sessions.
+          </p>
+        </div>
+        <div id="cache-results" class="unmeasured">
+          Measure an input above to compare actual cached decoding with full
+          replay.
+        </div>
+      </section>
+      <section id="tokenizer-bench" hidden>
+        <div class="instrument-intro">
+          <h2>Where do the pieces come from?</h2>
+          <p>
+            The measured side uses SmolLM2’s unchanged tokenizer. The editable
+            side implements byte-pair merging from scratch: start with 256 UTF-8
+            bytes, merge adjacent pairs, and watch the pieces change. It has no
+            normalization, word splitter or special tokens.
+          </p>
+        </div>
+        <form id="tokenizer-form">
+          <label for="token-text"
+            >TEXT TO MAP / EXACT WHITESPACE AND UNICODE</label
+          ><textarea id="token-text" rows="3">
+We are remembering. We remembered. 👻</textarea
+          ><label for="token-corpus"
+            >CORPUS FOR YOUR TOKENIZER / EDIT AND RETRAIN THE MERGES</label
+          ><textarea id="token-corpus" rows="4">
+remember remembering remembered memory memory memory
+we are remembering together</textarea
+          >
+          <div class="control-row">
+            <label
+              >MERGES
+              <input
+                id="merge-count"
+                type="number"
+                min="0"
+                max="64"
+                value="12" /></label
+            ><button type="submit" id="map-tokens">MAP & BUILD ↗</button
+            ><button type="button" id="copy-context">
+              COPY QUESTION INTO SAMPLE ↙
+            </button>
+          </div>
+          <details>
+            <summary>Edit the merge rules yourself</summary>
+            <p class="fine">
+              Each pair names two byte IDs (0–255) or IDs created by earlier
+              rules (256 + rule rank). Rules apply in the listed order. Changing
+              order can change both segmentation and ID meaning.
+            </p>
+            <textarea
+              id="merge-rules"
+              rows="5"
+              placeholder="[[114,101],[109,101]]"
+              aria-label="Custom merge pairs as JSON"
+            ></textarea>
+            <div class="control-row">
+              <button type="button" id="use-rules">
+                APPLY THESE EXACT RULES ↗</button
+              ><button type="button" id="clear-rules">CLEAR RULE EDITOR</button>
+            </div>
+          </details>
+        </form>
+        <div id="token-results"></div>
+      </section>
+      <section class="instrument-section">
+        <details>
+          <summary>Sources, scope and the next level down</summary>
+          <p>
+            All measured tensors come from the pinned local checkpoint using
+            Transformers’ eager Llama implementation in float32 on CPU. Receipts
+            identify weights, tokenizer artifacts and runtime. The operation
+            diagram names the actual selected block; it is not to scale.
+          </p>
+          <p>
+            <a
+              href="https://arxiv.org/abs/1706.03762"
+              target="_blank"
+              rel="noopener"
+              >Attention Is All You Need</a
+            >
+            ·
+            <a
+              href="https://arxiv.org/abs/2305.13245"
+              target="_blank"
+              rel="noopener"
+              >Grouped-query attention</a
+            >
+            ·
+            <a
+              href="https://huggingface.co/docs/transformers/cache_explanation"
+              target="_blank"
+              rel="noopener"
+              >Cache mechanics</a
+            >
+            ·
+            <a
+              href="https://huggingface.co/docs/tokenizers/en/pipeline"
+              target="_blank"
+              rel="noopener"
+              >Tokenizer pipeline</a
+            >
+          </p>
+          <p>
+            Training is a different operation: the Exchange’s seed experiment
+            fits a copy of the separate random byte transformer to an explicit
+            target. A forward pass, a KV cache, an activation gradient and a
+            weight update are different things.
+          </p>
+        </details>
+      </section>
+    </main>
+    <div id="instrument-notice" role="status" aria-live="polite"></div>
+    <script src="navigation.js"></script>
+    <script type="module" src="workshop.js"></script>
+  </body>
+</html>

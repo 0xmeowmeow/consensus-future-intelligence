@@ -1,0 +1,382 @@
+/* The accepted engraved Table, opened up for an actual conversation. */
+.conversation-table {
+  position: relative;
+  isolation: isolate;
+  min-height: 85vh;
+}
+.conversation-engraving {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(180deg, #100e0b66, #100e0bd9 660px, #100e0b),
+    url("assets/contact-table.png") top center/1500px auto no-repeat;
+  opacity: 0.8;
+  pointer-events: none;
+}
+.room-heading {
+  padding: 42px max(24px, 5vw) 30px;
+  max-width: 1250px;
+}
+.eyebrow {
+  color: var(--red);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+.eyebrow span {
+  margin-left: 20px;
+  color: var(--bone);
+}
+.room-heading h1 {
+  font:
+    900 clamp(28px, 3.3vw, 53px) / 1.08 Condensed,
+    sans-serif;
+  max-width: 1000px;
+  margin: 16px 0;
+  overflow-wrap: anywhere;
+}
+.room-heading p {
+  max-width: 820px;
+  background: #100e0bd9;
+  display: inline-block;
+  padding: 6px 10px;
+  margin: 0;
+}
+.room-layout {
+  display: grid;
+  grid-template-columns: 245px minmax(0, 840px);
+  gap: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 40px;
+}
+.room-margin {
+  font-size: 11px;
+}
+.room-margin h2 {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  border-top: 1px solid #776a4b;
+  padding-top: 18px;
+  margin-top: 25px;
+}
+.room-margin > button,
+.room-margin > a {
+  display: block;
+  text-align: left;
+  margin: 12px 0;
+  color: var(--red);
+}
+.room-margin details {
+  margin: 28px 0;
+}
+.room-margin summary {
+  cursor: pointer;
+}
+.person {
+  display: flex;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #61553766;
+  overflow-wrap: anywhere;
+}
+.person-symbol {
+  font-size: 22px;
+  color: var(--red);
+}
+.person small {
+  display: block;
+  opacity: 0.65;
+}
+.fine {
+  font-size: 10px;
+  line-height: 1.65;
+  color: var(--faint);
+}
+.conversation-well {
+  min-width: 0;
+  background: #100e0bf5;
+  border: 1px solid #615537;
+  box-shadow: 0 20px 100px #0009;
+}
+.message {
+  position: relative;
+  padding: 24px 28px;
+  border-bottom: 1px solid #594d3677;
+  scroll-margin-top: 100px;
+}
+.message.human {
+  border-left: 3px solid var(--red);
+}
+.message.chosen {
+  background: #e9dec208;
+}
+.message-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-size: 10px;
+  overflow-wrap: anywhere;
+}
+.message-head strong {
+  color: var(--red);
+}
+.message-head time {
+  margin-left: auto;
+  color: var(--faint);
+  font-size: 9px;
+}
+.message-text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 12px 0 18px;
+}
+.message-parent {
+  font-size: 10px;
+  color: var(--faint);
+  padding-left: 10px;
+  border-left: 1px solid var(--red);
+  display: block;
+  text-align: left;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.message-tools {
+  display: flex;
+  align-items: center;
+  gap: 5px 14px;
+  flex-wrap: wrap;
+  font-size: 9px;
+}
+.message-tools button,
+.message-tools a {
+  padding: 0;
+  min-height: 32px;
+}
+.message-tools button[aria-pressed="true"] {
+  color: var(--red);
+  text-decoration: underline;
+}
+.message-tools details {
+  position: relative;
+}
+.message-tools summary {
+  cursor: pointer;
+  min-height: 32px;
+  align-content: center;
+}
+.message-tools details[open] {
+  flex-basis: 100%;
+  border-top: 1px dotted #594d36;
+  padding: 8px 0;
+}
+.score-caption {
+  color: var(--faint);
+}
+.marker-chip {
+  padding: 10px 0;
+  display: block;
+  border-top: 1px dotted #615537;
+  color: var(--bone);
+  overflow-wrap: anywhere;
+}
+.marker-chip small {
+  display: block;
+  color: var(--red);
+}
+.room-empty {
+  padding: 48px 28px;
+  min-height: 280px;
+}
+.room-empty strong {
+  font:
+    900 45px/1 Condensed,
+    sans-serif;
+  display: block;
+  max-width: 350px;
+}
+.room-empty p {
+  max-width: 400px;
+}
+#composer {
+  position: sticky;
+  bottom: 0;
+  z-index: 4;
+  background: #1b1710f5;
+  border-top: 2px solid var(--red);
+  padding: 18px 24px;
+  backdrop-filter: blur(8px);
+}
+.composer-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  font-size: 9px;
+  margin-bottom: 8px;
+}
+.composer-head label {
+  color: var(--red);
+}
+#reply-label {
+  max-width: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.composer-foot {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 10px;
+}
+.composer-foot > button {
+  margin-left: auto;
+  color: var(--red);
+  font-weight: bold;
+}
+#words {
+  width: 100%;
+  resize: vertical;
+  min-height: 75px;
+  max-height: 40vh;
+  background: #100e0b;
+  color: var(--bone);
+  border: 1px solid #615537;
+  padding: 10px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.composer-foot select {
+  max-width: 130px;
+}
+.composer-foot input {
+  width: auto;
+  margin: 0;
+  accent-color: var(--red);
+}
+#composer-status {
+  margin: 5px 0 0;
+}
+#latest {
+  background: var(--red);
+  color: var(--soot);
+  width: 100%;
+  position: sticky;
+  bottom: 200px;
+}
+#notice {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 90vw;
+  padding: 12px 20px;
+  background: var(--bone);
+  color: var(--soot);
+  z-index: 50;
+  box-shadow: 0 4px 40px #000;
+  display: none;
+}
+#notice.active {
+  display: block;
+}
+#models label {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 6px 0;
+  font-size: 12px;
+}
+#models input {
+  width: auto;
+  margin: 0;
+}
+dialog select {
+  width: 100%;
+  padding: 10px;
+  background: #17130e;
+  color: var(--bone);
+}
+dialog p {
+  font-size: 11px;
+}
+@media (max-width: 850px) {
+  .table-mast {
+    padding: 18px;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .table-brand {
+    font-size: 26px;
+  }
+  .table-mast nav {
+    gap: 25px;
+  }
+  .room-layout {
+    grid-template-columns: 1fr;
+    padding: 0 12px 24px;
+    gap: 15px;
+  }
+  .room-margin {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    align-items: center;
+    padding: 0 10px;
+  }
+  .room-margin h2,
+  .room-margin > p,
+  .room-margin details,
+  #markers,
+  #receipt {
+    display: none;
+  }
+  .room-margin #people {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .person {
+    padding: 6px 0;
+  }
+  .person-symbol {
+    font-size: 18px;
+  }
+  .room-margin > a,
+  .room-margin > button {
+    margin: 0;
+    font-size: 10px;
+  }
+  .room-heading {
+    padding: 24px;
+  }
+  .message {
+    padding: 18px;
+  }
+  .message-text {
+    font-size: 13px;
+  }
+  #composer {
+    padding: 12px;
+  }
+  .composer-foot {
+    gap: 8px;
+    font-size: 9px;
+  }
+  .table-foot {
+    padding: 20px;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .message-head {
+    flex-wrap: wrap;
+  }
+  .message-head time {
+    margin-left: 0;
+  }
+}
